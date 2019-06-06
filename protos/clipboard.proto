@@ -1,0 +1,56 @@
+syntax = "proto3";
+package Clippr;
+
+option csharp_namespace = "Clippr.Communication";
+
+service Clipboard {
+	rpc Fetch (FetchRequest) returns (FetchReply) {}
+	rpc Create(CreateRequest) returns (CreateReply) {}
+	rpc Delete(DeleteRequest) returns (DeleteReply) {}
+	rpc ClipboardUpdate(RegisterConnection) returns (stream ClipboardEntryMessage) {}
+}
+
+message RegisterConnection {
+	string deviceName = 1;
+}
+message CreateRequest {
+	string content = 1;
+	string createdBy = 2;
+}
+
+message DeleteRequest {
+	string id = 1;
+}
+
+message DeleteReply {
+	bool response = 1;
+}
+
+message CreateReply {
+	bool response = 1;
+}
+
+message FetchRequest {
+	
+}	
+
+message FetchReply {
+	repeated ClipboardEntry clipboardEntries = 1;
+}
+
+message ClipboardEntryMessage {
+	ClipboardEntry clipboardEntry = 1;
+	ClipboardUpdateType clipboardUpdateType = 2;
+}
+
+enum ClipboardUpdateType {
+	DELETED = 0;
+	CREATED = 1;	    
+}
+
+message ClipboardEntry {
+	string id = 1;	
+	string createdAt = 2;
+	string content = 3;
+	string createdBy = 4;
+}

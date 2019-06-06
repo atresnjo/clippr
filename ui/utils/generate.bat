@@ -1,0 +1,1 @@
+protoc --dart_out=grpc:ui/src/lib/generated -Iprotos protos/clipboard.proto
